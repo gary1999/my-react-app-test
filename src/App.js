@@ -55,7 +55,8 @@ function App() {
     const getUsers = async () => {
         const response = await fetch(url);
         const users = await response.json();
-        setUsers(users);
+        //Limiting how many users are shown so page looks nicer
+        setUsers(users.filter((user) => user.id === 1 || user.id === 2));
         // console.log(users);
     };
 
