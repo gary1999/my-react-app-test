@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-import birthdays from './data/Birthdays';
+import Birthdays from './data/Birthdays';
 import List from './components/List';
 
 function App() {
@@ -15,15 +15,39 @@ function App() {
         }
     };
 
-    const [people, setPeople] = useState(birthdays);
+    const [people, setPeople] = useState(Birthdays);
 
     const handlePeople = () => {
-        if (people.length != 0) {
+        if (people.length !== 0) {
             setPeople([]);
         } else {
-            setPeople(birthdays);
+            setPeople(Birthdays);
         }
     };
+
+    const [value, setValue] = useState(0);
+
+    useEffect(() => {
+        if (value >= 1) {
+            document.title = `Current clicks ${value}`;
+            console.log(document.title);
+        }
+        //Empty Array for only initial, parameter for every time parameter is rendered
+    }, [value]);
+
+    const [size, setSize] = useState(window.innerWidth);
+
+    const checkSize = () => {
+        setSize(window.innerWidth);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', checkSize);
+        //Invoked once we exit this useEffect
+        return () => {
+            window.removeEventListener('resize', checkSize);
+        };
+    });
 
     return (
         <>
@@ -35,6 +59,14 @@ function App() {
                     <h1>{people.length} birthdays today</h1>
                     <List people={people} />
                     <button onClick={handlePeople}>Click</button>
+                </div>
+
+                <button onClick={() => setValue(value + 1)}>
+                    Increment title
+                </button>
+
+                <div>
+                    <h1>Window size: {size} px</h1>
                 </div>
             </div>
         </>

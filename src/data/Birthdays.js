@@ -1,4 +1,4 @@
-export default [
+const Birthdays = [
     {
         id: 1,
         name: 'Person 1',
@@ -10,3 +10,5 @@ export default [
         age: 20,
     },
 ];
+
+export default Birthdays;
