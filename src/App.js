@@ -49,6 +49,22 @@ function App() {
         };
     });
 
+    const url = 'https://api.github.com/users';
+    const [users, setUsers] = useState([]);
+
+    const getUsers = async () => {
+        const response = await fetch(url);
+        const users = await response.json();
+        setUsers(users);
+        // console.log(users);
+    };
+
+    useEffect(() => {
+        getUsers();
+        //Careful of the infinite loop,
+        //Add dependency array
+    }, []);
+
     return (
         <>
             <div className="App">
@@ -67,6 +83,21 @@ function App() {
 
                 <div>
                     <h1>Window size: {size} px</h1>
+                </div>
+
+                <div>
+                    <h3>github users</h3>
+                    {users.map((user) => {
+                        //User is an object
+                        const { id, login, avatar_url, html_url } = user;
+                        return (
+                            <ul>
+                                <li key={id}>
+                                    <div>{login}</div>
+                                </li>
+                            </ul>
+                        );
+                    })}
                 </div>
             </div>
         </>
