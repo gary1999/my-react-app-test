@@ -16,6 +16,7 @@ function App() {
     };
 
     const [people, setPeople] = useState(Birthdays);
+    const [hidePeople, setHidePeople] = useState('false');
 
     const handlePeople = () => {
         if (people.length !== 0) {
@@ -23,6 +24,7 @@ function App() {
         } else {
             setPeople(Birthdays);
         }
+        setHidePeople(!hidePeople);
     };
 
     const [value, setValue] = useState(0);
@@ -73,9 +75,12 @@ function App() {
                 <button onClick={handleClick}>change title</button>
 
                 <div>
+                    {/* {hidePeople ? setPeople([]) : setPeople[Birthdays]} */}
                     <h1>{people.length} birthdays today</h1>
                     <List people={people} />
-                    <button onClick={handlePeople}>Click</button>
+                    <button onClick={() => handlePeople()}>
+                        {hidePeople ? 'Hide People' : 'Show People'}
+                    </button>
                 </div>
 
                 <button onClick={() => setValue(value + 1)}>
