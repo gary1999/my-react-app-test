@@ -37,10 +37,12 @@ function App() {
         //Empty Array for only initial, parameter for every time parameter is rendered
     }, [value]);
 
-    const [size, setSize] = useState(window.innerWidth);
+    const [widthSize, setWidthSize] = useState(window.innerWidth);
+    const [heightSize, setHeightSize] = useState(window.innerHeight);
 
     const checkSize = () => {
-        setSize(window.innerWidth);
+        setWidthSize(window.innerWidth);
+        setHeightSize(window.innerHeight);
     };
 
     useEffect(() => {
@@ -68,6 +70,11 @@ function App() {
         //Add dependency array
     }, []);
 
+    const handleSumbit = (e) => {
+        e.preventDefault();
+        console.log('hello world');
+    };
+
     return (
         <>
             <div className="App">
@@ -88,7 +95,8 @@ function App() {
                 </button>
 
                 <div>
-                    <h1>Window size: {size} px</h1>
+                    <h1>Window width size: {widthSize} px</h1>
+                    <h1>Window height size: {heightSize} px</h1>
                 </div>
 
                 <div>
@@ -105,6 +113,21 @@ function App() {
                         );
                     })}
                 </div>
+
+                <article>
+                    {/* onSubmit is the same as onClick */}
+                    <form className="form" onSubmit={handleSumbit}>
+                        <div className="form-control">
+                            <label htmlFor="firstName">Name: </label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                            />
+                        </div>
+                        <button type="submit">Add</button>
+                    </form>
+                </article>
             </div>
         </>
     );
