@@ -60,7 +60,7 @@ function App() {
         const response = await fetch(url);
         const users = await response.json();
         //Limiting how many users are shown so page looks nicer
-        setUsers(users.filter((user) => user.id === 1 || user.id === 2));
+        setUsers(users.filter((user) => user.id === 1));
         // console.log(users);
     };
 
@@ -70,9 +70,20 @@ function App() {
         //Add dependency array
     }, []);
 
+    const [firstName, setFirstName] = useState('');
+    const [nameList, setNameList] = useState([]);
+
     const handleSumbit = (e) => {
         e.preventDefault();
-        console.log('hello world');
+        if (firstName) {
+            const person = { firstName };
+            //Current value in the state
+            setNameList((names) => {
+                //Spread operator to get the current value in the list and add another
+                return [...names, person];
+            });
+            setFirstName('');
+        }
     };
 
     return (
@@ -105,11 +116,9 @@ function App() {
                         //User is an object
                         const { id, login, avatar_url, html_url } = user;
                         return (
-                            <ul>
-                                <li key={id}>
-                                    <div>{login}</div>
-                                </li>
-                            </ul>
+                            <li key={id}>
+                                <div>{login}</div>
+                            </li>
                         );
                     })}
                 </div>
@@ -123,10 +132,16 @@ function App() {
                                 type="text"
                                 id="firstName"
                                 name="firstName"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
                         <button type="submit">Add</button>
                     </form>
+                    {nameList.map((name) => {
+                        const { id, firstName } = name;
+                        return <div>{<h3>{firstName}</h3>}</div>;
+                    })}
                 </article>
             </div>
         </>
