@@ -70,19 +70,24 @@ function App() {
         //Add dependency array
     }, []);
 
-    const [firstName, setFirstName] = useState('');
+    const [person2, setPerson2] = useState({ firstName: '', age2: '' });
     const [nameList, setNameList] = useState([]);
 
-    const handleSumbit = (e) => {
+    //Change input values based on target.name
+    //Allows for two different inputs using the same code
+    const handleChange = (e) => {
+        const targetName = e.target.name;
+        const value = e.target.value;
+        console.log(targetName, value);
+        setPerson2({ ...person2, [targetName]: value });
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (firstName) {
-            const person = { firstName };
-            //Current value in the state
-            setNameList((names) => {
-                //Spread operator to get the current value in the list and add another
-                return [...names, person];
-            });
-            setFirstName('');
+        if (person2.firstName && person2.age2) {
+            const newPerson2 = { ...person2 };
+            setNameList([...people, newPerson2]);
+            setPerson2({ firstName: '', age2: '' });
         }
     };
 
@@ -125,22 +130,40 @@ function App() {
 
                 <article>
                     {/* onSubmit is the same as onClick */}
-                    <form className="form" onSubmit={handleSumbit}>
+                    <form className="form">
                         <div className="form-control">
                             <label htmlFor="firstName">Name: </label>
                             <input
                                 type="text"
                                 id="firstName"
                                 name="firstName"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                value={person2.firstName}
+                                onChange={handleChange}
                             />
                         </div>
-                        <button type="submit">Add</button>
+                        <div className="form-control">
+                            <label htmlFor="age">Age: </label>
+                            <input
+                                type="text"
+                                id="age2"
+                                name="age2"
+                                value={person2.age2}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <button type="submit" onClick={handleSubmit}>
+                            Add
+                        </button>
                     </form>
                     {nameList.map((name) => {
-                        const { id, firstName } = name;
-                        return <div>{<h3>{firstName}</h3>}</div>;
+                        const { id, firstName, age2 } = name;
+                        return (
+                            <div>
+                                {<h3>{firstName}</h3>}
+                                {<h3>{age2}</h3>}
+                            </div>
+                        );
                     })}
                 </article>
             </div>
