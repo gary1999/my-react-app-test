@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 import Birthdays from './data/Birthdays';
@@ -91,6 +91,12 @@ function App() {
         }
     };
 
+    const refInput = useRef(null);
+
+    useEffect(() => {
+        refInput.current.focus();
+    });
+
     return (
         <>
             <div className="App">
@@ -135,6 +141,7 @@ function App() {
                             <label htmlFor="firstName">Name: </label>
                             <input
                                 type="text"
+                                ref={refInput}
                                 id="firstName"
                                 name="firstName"
                                 value={person2.firstName}
