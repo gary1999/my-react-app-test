@@ -94,6 +94,7 @@ function App() {
     const refInput = useRef(null);
 
     useEffect(() => {
+        //Wont trigger re-render so no need for empty dependency
         refInput.current.focus();
     });
 
